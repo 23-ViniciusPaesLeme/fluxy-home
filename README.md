@@ -80,6 +80,10 @@ O projeto contribui com os seguintes ODS da Agenda 2030 da ONU:
 
 ---
 
+## 🎥 Demonstração
+
+- **Aplicação online:** https://fluxy-home.onrender.com
+- **Repositório:** https://github.com/23-ViniciusPaesLeme/fluxy-home
 
 ---
 
