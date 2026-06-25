@@ -1,4 +1,3 @@
-/* Configuração de categorias */
 const CAT_DESPESA = [
   { id: "moradia", nome: "Moradia", cor: "#E2613E" },
   { id: "alimentacao", nome: "Alimentação", cor: "#E58A3C" },
@@ -18,7 +17,7 @@ const CAT_RECEITA = [
 const catMap = {};
 [...CAT_DESPESA, ...CAT_RECEITA].forEach((c) => (catMap[c.id] = c));
 
-/* Utilitários */
+
 const MESES = ["jan", "fev", "mar", "abr", "mai", "jun", "jul", "ago", "set", "out", "nov", "dez"];
 const brl = (v) => (v || 0).toLocaleString("pt-BR", { style: "currency", currency: "BRL" });
 const hoje = () => new Date().toISOString().slice(0, 10);
@@ -36,7 +35,7 @@ const esc = (s) =>
     ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;" }[c])
   );
 
-/* Estado */
+
 const estado = {
   familia: null,
   mes: mesAtual(),
@@ -49,9 +48,7 @@ let tipoLancamento = "despesa";
 let graficoPizza = null;
 let graficoBarras = null;
 
-/*
-   INICIALIZAÇÃO
-*/
+
 document.addEventListener("DOMContentLoaded", async () => {
   modalLancamento = new bootstrap.Modal(document.getElementById("modalLancamento"));
   configurarAuth();
@@ -68,9 +65,7 @@ document.addEventListener("DOMContentLoaded", async () => {
   }
 });
 
-/*
-   AUTENTICAÇÃO
-*/
+
 function configurarAuth() {
   document.querySelectorAll(".fx-tab").forEach((tab) => {
     tab.addEventListener("click", () => trocarModoAuth(tab.dataset.modo));
@@ -88,6 +83,7 @@ function trocarModoAuth(modo) {
     t.classList.toggle("is-on", t.dataset.modo === modo)
   );
   document.getElementById("campo-familia").hidden = modo !== "criar";
+  document.getElementById("campo-consent").hidden = modo !== "criar";
   document.getElementById("btn-auth").textContent = modo === "entrar" ? "Entrar" : "Criar conta";
   mostrarErroAuth("");
 }
@@ -115,6 +111,9 @@ async function criarConta() {
   const familia = document.getElementById("in-familia").value;
   const email = document.getElementById("in-email").value;
   const senha = document.getElementById("in-senha").value;
+  if (!document.getElementById("in-consent").checked) {
+    return mostrarErroAuth("Você precisa aceitar a Política de Privacidade para criar a conta.");
+  }
   try {
     const r = await Api.registrar(familia, email, senha);
     Api.setToken(r.token);
@@ -146,9 +145,7 @@ async function sair() {
   mostrarErroAuth("");
 }
 
-/*
-   APP — esqueleto, cabeçalho e navegação
-*/
+
 function configurarApp() {
   document.getElementById("btn-sair").addEventListener("click", sair);
   document.getElementById("mes-anterior").addEventListener("click", () => mudarMes(-1));
@@ -213,7 +210,7 @@ function atualizarNav() {
   );
 }
 
-/* acesso aos dados (cache) */
+
 function dados() {
   return estado.cache;
 }
@@ -224,9 +221,7 @@ function resumoMes(transacoes, mes) {
   return { doMes, receitas, despesas, saldo: receitas - despesas };
 }
 
-/*
-   ROTEAMENTO DE VIEWS
-*/
+
 function renderConteudo() {
   if (graficoPizza) { graficoPizza.destroy(); graficoPizza = null; }
   if (graficoBarras) { graficoBarras.destroy(); graficoBarras = null; }
@@ -238,7 +233,7 @@ function renderConteudo() {
   else if (v === "relatorios") renderRelatorios();
 }
 
-/* PAINEL */
+
 function renderPainel() {
   const { doMes, receitas, despesas, saldo } = resumoMes(dados().transacoes, estado.mes);
   const total = receitas + despesas;
@@ -316,7 +311,7 @@ function renderPainel() {
   );
 }
 
-/* LANÇAMENTOS */
+
 function listaLancamentosHTML(itens, comExcluir) {
   return `<ul class="fx-lista">${itens.map((t) => {
     const cat = catMap[t.categoria] || { nome: "—", cor: "#999" };
@@ -368,7 +363,7 @@ async function excluirLancamento(id) {
   }
 }
 
-/* Modal de novo lançamento */
+
 function abrirModalLancamento() {
   definirTipoLancamento("despesa");
   document.getElementById("lc-valor").value = "";
@@ -416,7 +411,7 @@ async function salvarLancamento() {
   }
 }
 
-/* PLANEJAMENTO */
+
 function renderPlanejamento() {
   const d = dados();
   const { doMes } = resumoMes(d.transacoes, estado.mes);
@@ -477,7 +472,7 @@ function renderPlanejamento() {
   });
 }
 
-/* ----------------------------- RELATÓRIOS ------------------------------ */
+
 function renderRelatorios() {
   const { doMes, despesas } = resumoMes(dados().transacoes, estado.mes);
   const porCat = {};

@@ -1,6 +1,3 @@
-/*
-   Fluxy Home — Estilo (página inicial + sistema)
-*/
 :root {
   --verde: #114B3F;
   --verde2: #1F8A6B;
@@ -37,7 +34,7 @@ h3 {
   margin: 0;
 }
 
-/* ---- Marca ---- */
+
 .fx-brand {
   display: flex;
   align-items: center;
@@ -86,7 +83,7 @@ h3 {
   color: #9FE3C6;
 }
 
-/* ---- Botões ---- */
+
 .fx-btn-primary {
   background: var(--verde);
   color: #fff;
@@ -128,16 +125,14 @@ h3 {
   font-size: 14px;
 }
 
-/* 
-   PÁGINA INICIAL (landing)
-*/
+
 .lp-container {
   max-width: 1080px;
   margin: 0 auto;
   padding: 0 22px;
 }
 
-/* Navbar */
+
 .lp-nav {
   position: sticky;
   top: 0;
@@ -171,7 +166,7 @@ h3 {
   color: var(--verde);
 }
 
-/* Hero */
+
 .lp-hero {
   padding: 56px 0 64px;
 }
@@ -275,7 +270,7 @@ h3 {
   gap: 6px;
 }
 
-/* Seções */
+
 .lp-section {
   padding: 64px 0;
 }
@@ -306,7 +301,7 @@ h3 {
   margin: 0 auto 36px;
 }
 
-/* Recursos */
+
 .lp-recurso {
   background: var(--papel);
   border: 1px solid var(--linha);
@@ -337,7 +332,7 @@ h3 {
   margin: 0;
 }
 
-/* Projeto / ODS */
+
 .lp-ods {
   display: flex;
   gap: 12px;
@@ -360,7 +355,7 @@ h3 {
   font-size: 13px;
 }
 
-/* Feedback (landing) */
+
 .lp-feedback {
   align-items: flex-start;
 }
@@ -391,7 +386,7 @@ h3 {
   margin: 0;
 }
 
-/* Footer */
+
 .lp-footer {
   background: var(--verde);
   color: #fff;
@@ -402,13 +397,75 @@ h3 {
   display: flex;
   align-items: center;
   justify-content: space-between;
-  gap: 16px;
+  gap: 18px;
   flex-wrap: wrap;
+}
+
+.lp-footer-marca {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
 }
 
 .lp-footer-txt {
   font-size: 13px;
   color: #C7DAD2;
+}
+
+.lp-footer-fim {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  text-align: right;
+}
+
+.lp-footer-link {
+  color: #9FE3C6;
+  font-size: 13px;
+  font-weight: 600;
+  text-decoration: none;
+}
+
+.lp-footer-link:hover {
+  text-decoration: underline;
+}
+
+.lp-footer-copy {
+  font-size: 12.5px;
+  color: #C7DAD2;
+}
+
+@media (max-width:640px) {
+  .lp-footer-fim {
+    text-align: left;
+  }
+}
+
+
+.lp-doc {
+  max-width: 760px;
+}
+
+.lp-doc-data {
+  color: var(--suave);
+  font-size: 13px;
+  margin: -8px 0 24px;
+}
+
+.lp-doc-h2 {
+  font-size: 19px;
+  margin: 28px 0 10px;
+}
+
+.lp-doc-lista {
+  color: var(--suave);
+  font-size: 15px;
+  line-height: 1.7;
+  padding-left: 20px;
+}
+
+.lp-doc-lista li {
+  margin-bottom: 6px;
 }
 
 @media (max-width:640px) {
@@ -421,9 +478,7 @@ h3 {
   }
 }
 
-/* ==========================================================================
-   SISTEMA (app)
-   ========================================================================== */
+
 .fx-auth-wrap {
   min-height: 100vh;
   display: flex;
@@ -496,6 +551,29 @@ h3 {
   color: var(--verde);
 }
 
+.fx-consent {
+  display: flex;
+  gap: 9px;
+  align-items: flex-start;
+  font-size: 12.5px;
+  color: var(--suave);
+  line-height: 1.45;
+  cursor: pointer;
+}
+
+.fx-consent input {
+  margin-top: 2px;
+  flex-shrink: 0;
+  width: 16px;
+  height: 16px;
+  accent-color: var(--verde);
+}
+
+.fx-consent a {
+  color: var(--verde2);
+  font-weight: 600;
+}
+
 /* Campos */
 .fx-field {
   display: flex;
@@ -544,7 +622,7 @@ h3 {
   border-radius: 10px;
 }
 
-/* Shell do app */
+
 #tela-app {
   max-width: 680px;
   margin: 0 auto;
@@ -659,7 +737,7 @@ h3 {
   line-height: 1.5;
 }
 
-/* Hero do painel */
+
 .fx-hero {
   background: linear-gradient(150deg, #114B3F, #1F8A6B);
   color: #fff;
@@ -716,7 +794,7 @@ h3 {
   gap: 6px;
 }
 
-/* Cards */
+
 .fx-card {
   background: var(--papel);
   border: 1px solid var(--linha);
@@ -772,7 +850,7 @@ h3 {
   font-variant-numeric: tabular-nums;
 }
 
-/* Blocos */
+
 .fx-bloco {
   background: var(--papel);
   border: 1px solid var(--linha);
@@ -832,7 +910,7 @@ h3 {
   margin: 0;
 }
 
-/* Categorias / barras */
+
 .fx-dot {
   display: inline-block;
   width: 9px;
@@ -888,7 +966,7 @@ h3 {
   transition: width .5s ease;
 }
 
-/* Lista de lançamentos */
+
 .fx-lista {
   list-style: none;
   margin: 0;
@@ -969,7 +1047,7 @@ h3 {
   color: var(--despesa);
 }
 
-/* Modal */
+
 .fx-modal {
   border: 0;
   border-radius: 22px;
@@ -1021,7 +1099,7 @@ h3 {
   color: var(--receita);
 }
 
-/* Orçamentos */
+
 .fx-orcamentos {
   list-style: none;
   margin: 0;
@@ -1085,7 +1163,7 @@ h3 {
   font-weight: 600;
 }
 
-/* Gráficos */
+
 .fx-graf-titulo {
   font-size: 15px;
   margin-bottom: 14px;
@@ -1134,7 +1212,7 @@ h3 {
   color: var(--suave);
 }
 
-/* Feedback (componentes compartilhados) */
+
 .fx-fb-label {
   display: block;
   font-size: 14px;
@@ -1274,7 +1352,7 @@ h3 {
   color: var(--suave);
 }
 
-/* Navegação inferior */
+
 .fx-nav {
   position: fixed;
   bottom: 0;
@@ -1318,7 +1396,7 @@ h3 {
   color: var(--verde);
 }
 
-/* Animação */
+
 @keyframes rise {
   from {
     transform: translateY(14px);
