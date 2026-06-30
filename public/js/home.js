@@ -1,10 +1,12 @@
-/* 
+/* ==========================================================================
    Fluxy Home — Página inicial (feedbacks)
-*/
+   ========================================================================== */
 let notaSelecionada = 0;
+let listaFeedbacks = [];
+let feedbackExpandido = false;
+const LIMITE_FEEDBACK = 3; // quantos comentários mostrar antes do "Ver mais"
 
 document.addEventListener("DOMContentLoaded", () => {
-  // Estrelas
   document.querySelectorAll("#estrelas .fx-estrela").forEach((b) => {
     b.addEventListener("click", () => {
       notaSelecionada = Number(b.dataset.nota);
@@ -39,26 +41,34 @@ const esc = (s) =>
 
 async function carregarFeedbacks() {
   const alvo = document.getElementById("lista-feedback");
-  let lista = [];
   try {
-    lista = await Api.getFeedback();
+    listaFeedbacks = await Api.getFeedback();
   } catch (e) {
     alvo.innerHTML = `<p class="fx-vazio">Não foi possível carregar os comentários.</p>`;
     return;
   }
+  feedbackExpandido = false;
+  renderListaFeedback();
+}
 
-  if (!lista.length) {
+function renderListaFeedback() {
+  const alvo = document.getElementById("lista-feedback");
+
+  if (!listaFeedbacks.length) {
     alvo.innerHTML = `<div class="lp-fb-vazio"><i class="bi bi-chat-square-text"></i><p>Ainda não há comentários. Seja o primeiro a avaliar!</p></div>`;
     return;
   }
 
-  const media = lista.reduce((s, f) => s + f.nota, 0) / lista.length;
+  const media = listaFeedbacks.reduce((s, f) => s + f.nota, 0) / listaFeedbacks.length;
+  const visiveis = feedbackExpandido ? listaFeedbacks : listaFeedbacks.slice(0, LIMITE_FEEDBACK);
+  const temMais = listaFeedbacks.length > LIMITE_FEEDBACK;
+
   alvo.innerHTML = `
     <div class="fx-fb-resumo">
       <div><span class="fx-fb-media">${media.toFixed(1)}</span><span class="fx-fb-media-max">/5</span></div>
-      <div class="fx-fb-estrelas-mini">${estrelasMiniHTML(media)}<span class="fx-fb-total">${lista.length} ${lista.length === 1 ? "comentário" : "comentários"}</span></div>
+      <div class="fx-fb-estrelas-mini">${estrelasMiniHTML(media)}<span class="fx-fb-total">${listaFeedbacks.length} ${listaFeedbacks.length === 1 ? "comentário" : "comentários"}</span></div>
     </div>
-    <ul class="fx-fb-lista">${lista.map((f) => `
+    <ul class="fx-fb-lista">${visiveis.map((f) => `
       <li class="fx-fb-item">
         <div class="fx-fb-item-topo">
           <div class="fx-fb-estrelas-mini">${estrelasMiniHTML(f.nota)}</div>
@@ -66,7 +76,21 @@ async function carregarFeedbacks() {
         </div>
         <p class="fx-fb-comentario">"${esc(f.comentario)}"</p>
         <span class="fx-fb-nome">— ${esc(f.nome)}</span>
-      </li>`).join("")}</ul>`;
+      </li>`).join("")}</ul>
+    ${temMais
+      ? `<button class="lp-ver-mais" id="btn-ver-mais">${feedbackExpandido
+          ? `Ver menos <i class="bi bi-chevron-up"></i>`
+          : `Ver mais ${listaFeedbacks.length - LIMITE_FEEDBACK} comentário(s) <i class="bi bi-chevron-down"></i>`}</button>`
+      : ""}
+  `;
+
+  const btn = document.getElementById("btn-ver-mais");
+  if (btn) {
+    btn.addEventListener("click", () => {
+      feedbackExpandido = !feedbackExpandido;
+      renderListaFeedback();
+    });
+  }
 }
 
 async function enviarFeedback() {

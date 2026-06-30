@@ -1,6 +1,6 @@
-/* 
+/* ==========================================================================
    Fluxy Home — Servidor (Node.js + Express)
-*/
+   ========================================================================== */
 const express = require("express");
 const path = require("path");
 require("dotenv").config();
@@ -20,6 +20,7 @@ app.use("/api", require("./routes/auth"));
 app.use("/api/lancamentos", require("./routes/lancamentos"));
 app.use("/api/orcamentos", require("./routes/orcamentos"));
 app.use("/api/feedback", require("./routes/feedback"));
+app.use("/api/estatisticas", require("./routes/estatisticas"));
 
 const PORT = process.env.PORT || 3000;
 
